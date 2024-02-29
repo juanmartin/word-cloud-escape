@@ -45,15 +45,11 @@
     });
   });
 
-  // Category arrays
-  let p2p = [];
-  let rrhh = [];
-  let otc = [];
-  let ce = [];
-
   // Check if game is won
   function checkWin() {
-    return todosLosItems.length === 0;
+    if (todosLosItems.length === 0) {
+      alert("Ganaste!");
+    }
   }
 
   // Check if an item belongs to a category
@@ -107,7 +103,10 @@
     console.log("Dropped", itemId, "in", category);
     if (itemBelongsToCategory(itemId, category)) {
       event.target.appendChild(item);
+      item.classList.remove("droppable");
+      todosLosItems.splice(todosLosItems.indexOf(itemId), 1);
       console.log("Dropped", itemId, "in", category);
+      checkWin();
     } else {
       console.log("Incorrect category for", itemId);
     }
