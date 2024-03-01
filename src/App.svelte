@@ -66,6 +66,7 @@
 
   // Check if an item belongs to a category
   function itemBelongsToCategory(item, category) {
+    console.log("Checking if", item, "belongs to", category);
     return nube
       .find((nubeItem) => {
         return nubeItem.category === category;
@@ -90,6 +91,7 @@
     event.preventDefault();
     // Check if the drop target is a droppable zone
     if (!event.target.classList.contains("droppable")) {
+      console.log("Drop target is not a droppable zone");
       return;
     }
     const itemId = event.dataTransfer.getData("text/plain");
@@ -144,7 +146,10 @@
           </tr>
           <tr class="h-screen">
             {#each nube as columna}
-              <td class="droppable border-2 border-gray-300 list-none">
+              <td
+                id={columna.category}
+                class="droppable border-2 border-gray-300 list-none align-top"
+              >
                 <div id={columna.category} class="h-full w-full">
                   {#each droppedItemsPerCategory[columna.category] as item}
                     <WordItem word={item} isDraggable={false} />
