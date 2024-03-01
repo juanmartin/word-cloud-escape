@@ -12,12 +12,12 @@ export const listPorts = async () => {
     // The Web Serial API is supported, proceed with using it
     const ports = await navigator.serial.getPorts();
     console.log("Available serial ports:", ports);
-    const usbPorts = ports.filter((portInfo) => /usb/i.test(portInfo.path));
+    const usbPorts = ports.filter((portInfo) => /USB|COM/i.test(portInfo.path));
     if (usbPorts.length > 0) {
       port = usbPorts[0];
-      console.log("USB serial port selected:", usbPorts[0].path);
+      console.log("serial port selected:", usbPorts[0].path);
     } else {
-      alert("No USB serial ports available");
+      alert("No serial ports available");
       console.log("No USB serial ports available");
     }
   } catch (err) {
@@ -27,7 +27,7 @@ export const listPorts = async () => {
 
 export const sendData = async (data) => {
   if (!port) {
-    console.log("No USB serial port is available");
+    console.log("No serial port is available");
     return;
   }
 
