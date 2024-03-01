@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import WordItem from "./WordItem.svelte";
   import { sendData } from "./lib/serial";
+  import cloud_video from "/cloud_video.mp4";
 
   // Data nube sets of phrases
   const nube = [
@@ -46,6 +47,14 @@
       todosLosItems.push(item);
     });
   });
+
+  let shouldAnimate = false;
+  function handleAnimation() {
+    shouldAnimate = true;
+    setTimeout(() => {
+      shouldAnimate = false;
+    }, 500);
+  }
 
   let droppedItems = [];
 
@@ -106,15 +115,29 @@
       todosLosItems = todosLosItems.filter((item) => item !== itemId);
       console.log("droppedItems", droppedItems);
       console.log("Correct category for", itemId, "in", category);
+      handleAnimation();
       checkWin();
     } else {
       console.log("Incorrect category for", itemId);
+      shouldAnimate = false;
     }
   }
 </script>
 
 <main>
   <div>
+    <video
+      autoplay
+      muted
+      loop
+      id="myVideo"
+      class="fixed right-0 bottom-0 min-w-full min-h-full -z-10 {shouldAnimate
+        ? 'animate-bounce-zoom ring-4 ring-green-500 ring-opacity-100'
+        : ''}"
+    >
+      <source src={cloud_video} type="video/mp4" />
+    </video>
+
     <h1>Bienvenidos a Cloud Escape!</h1>
     <p>Arrastre las palabras a su correspondiente categoría.</p>
 
