@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import WordItem from "./WordItem.svelte";
-  import sendData from "./lib/serial";
+  import { sendData } from "./lib/serial";
 
   // Data nube sets of phrases
   const nube = [
