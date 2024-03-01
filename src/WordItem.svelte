@@ -42,7 +42,7 @@
 
 <li
   id={word}
-  class="bg-emerald-600 p-4 border-emerald-800 border-solid border-2 rounded-xl m-3"
+  class="bg-emerald-600 p-4 border-emerald-800 border-solid border-2 rounded-xl m-3 w-64 mx-auto my-3"
   draggable={isDraggable}
   use:makeDraggable={{
     shouldBeDraggable: isDraggable,
