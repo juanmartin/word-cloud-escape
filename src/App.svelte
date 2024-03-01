@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import WordItem from "./WordItem.svelte";
 
   // Data nube sets of phrases
   const nube = [
@@ -45,6 +46,15 @@
     });
   });
 
+  let droppedItems = [];
+
+  let droppedItemsPerCategory = {
+    P2P: [],
+    RRHH: [],
+    "ORDEN TO CASH": [],
+    "CUSTOMER EXPERIENCE": [],
+  };
+
   // Check if game is won
   function checkWin() {
     if (todosLosItems.length === 0) {
@@ -59,27 +69,6 @@
         return nubeItem.category === category;
       })
       .items.includes(item);
-  }
-
-  function makeDraggable(node) {
-    node.draggable = true;
-    node.addEventListener("dragstart", handleDragStart);
-    node.addEventListener("dragend", handleDragEnd);
-    return {
-      destroy() {
-        node.removeEventListener("dragstart", handleDragStart);
-        node.removeEventListener("dragend", handleDragEnd);
-      },
-    };
-  }
-
-  function handleDragStart(event) {
-    event.dataTransfer.setData("text/plain", event.target.id);
-    event.target.classList.add("dragging");
-  }
-
-  function handleDragEnd(event) {
-    event.target.classList.remove("dragging");
   }
 
   onMount(() => {
@@ -98,14 +87,17 @@
   function handleDrop(event) {
     event.preventDefault();
     const itemId = event.dataTransfer.getData("text/plain");
-    const item = document.getElementById(itemId);
     const category = event.target.id;
     console.log("Dropped", itemId, "in", category);
     if (itemBelongsToCategory(itemId, category)) {
-      event.target.appendChild(item);
-      item.classList.remove("droppable");
-      todosLosItems.splice(todosLosItems.indexOf(itemId), 1);
-      console.log("Dropped", itemId, "in", category);
+      droppedItemsPerCategory[category] = [
+        ...droppedItemsPerCategory[category],
+        itemId,
+      ];
+      droppedItems = [...droppedItems, itemId];
+      todosLosItems = todosLosItems.filter((item) => item !== itemId);
+      console.log("droppedItems", droppedItems);
+      console.log("Correct category for", itemId, "in", category);
       checkWin();
     } else {
       console.log("Incorrect category for", itemId);
@@ -128,13 +120,7 @@
         </h2>
         <ul class="list-none">
           {#each todosLosItems.sort(() => Math.random() - 0.5) as word (word)}
-            <li
-              id={word}
-              class=" bg-emerald-600 p-4 border-emerald-800 border-solid border-2 rounded-xl m-3"
-              use:makeDraggable
-            >
-              {word}
-            </li>
+            <WordItem {word} isDraggable={!droppedItems.includes(word)} />
           {/each}
         </ul>
       </div>
@@ -153,7 +139,11 @@
           <tr class="h-screen">
             {#each nube as columna}
               <td class="droppable border-2 border-gray-300 list-none">
-                <div id={columna.category} class="h-full w-full"></div>
+                <div id={columna.category} class="h-full w-full">
+                  {#each droppedItemsPerCategory[columna.category] as item}
+                    <WordItem word={item} isDraggable={false} />
+                  {/each}
+                </div>
               </td>
             {/each}
           </tr>
