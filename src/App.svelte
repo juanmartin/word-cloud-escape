@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import WordItem from "./WordItem.svelte";
+  import sendData from "./lib/serial";
 
   // Data nube sets of phrases
   const nube = [
@@ -59,6 +60,7 @@
   function checkWin() {
     if (todosLosItems.length === 0) {
       alert("Ganaste!");
+      sendData(100);
     }
   }
 
@@ -86,6 +88,10 @@
 
   function handleDrop(event) {
     event.preventDefault();
+    // Check if the drop target is a droppable zone
+    if (!event.target.classList.contains("droppable")) {
+      return;
+    }
     const itemId = event.dataTransfer.getData("text/plain");
     const category = event.target.id;
     console.log("Dropped", itemId, "in", category);
@@ -130,7 +136,7 @@
           <tr>
             {#each nube as columna}
               <th
-                class="bg-cyan-500 p-4 border-cyan-800 border-solid border-2 font-bold w-80"
+                class="droppable bg-cyan-500 p-4 border-cyan-800 border-solid border-2 font-bold w-80"
               >
                 {columna.category}
               </th>
