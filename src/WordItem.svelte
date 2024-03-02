@@ -33,6 +33,9 @@
   function handleDragStart(event) {
     event.dataTransfer.setData("text/plain", event.target.id);
     event.target.classList.add("dragging");
+    event.target.classList.add(
+      "transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300"
+    );
   }
 
   function handleDragEnd(event) {
@@ -42,7 +45,7 @@
 
 <li
   id={word}
-  class="bg-emerald-600 p-4 border-emerald-800 border-solid border-2 rounded-xl w-44 mx-auto my-1"
+  class="bg-emerald-600 p-4 rounded-xl w-44 mx-auto my-3 shadow-md"
   draggable={isDraggable}
   use:makeDraggable={{
     shouldBeDraggable: isDraggable,

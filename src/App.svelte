@@ -157,7 +157,9 @@
       id="draggable"
       class="mr-4 -mt-24 w-96 bg-white bg-opacity-25 rounded-lg p-3"
     >
-      <h2 class="bg-cyan-600 p-4 font-bold mb-4 rounded-lg">Conceptos</h2>
+      <h2 class="bg-cyan-600 p-4 font-bold mb-4 rounded-lg shadow-lg">
+        Conceptos
+      </h2>
       <ul class="list-none flex flex-wrap">
         {#each todosLosItems.sort(() => Math.random() - 0.5) as word (word)}
           <WordItem {word} isDraggable={!droppedItems.includes(word)} />
@@ -170,19 +172,22 @@
         <tr class="flex place-content-evenly w-full mx-0">
           {#each nube as columna}
             <th
-              class="bg-cyan-600 p-4 border-solid font-bold w-72 rounded-lg flex justify-center"
+              class="bg-cyan-600 p-4 border-solid font-bold w-72 rounded-lg flex justify-center shadow-lg"
             >
               {columna.category}
             </th>
           {/each}
         </tr>
-        <tr class="flex flex-grow h-96">
+        <tr class="flex flex-grow h-96 place-content-evenly">
           {#each nube as columna}
             <td
               id={columna.category}
-              class="pt-4 border-gray-300 list-none align-top rounded-lg inline-flex w-full"
+              class="pt-4 border-gray-300 list-none align-top rounded-lg inline-flex w-72"
             >
-              <div id={columna.category} class="droppable h-96 w-full">
+              <div
+                id={columna.category}
+                class="droppable h-96 w-72 border-solid border-2 border-cyan-300 border-opacity-30 rounded-lg"
+              >
                 {#each droppedItemsPerCategory[columna.category] as item}
                   <WordItem word={item} isDraggable={false} />
                 {/each}
