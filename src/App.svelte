@@ -7,6 +7,20 @@
   import win_sound from "/ps1.opus";
   import success_sound from "/blip.ogg";
 
+  // disable right click
+  [...document.querySelectorAll(".js-noMenu")].forEach((el) =>
+    el.addEventListener("contextmenu", (e) => e.preventDefault())
+  );
+
+  function touchHandler(event) {
+    if (event.touches.length > 1) {
+      //the event is multi-touch
+      //you can then prevent the behavior
+      event.preventDefault();
+    }
+  }
+  window.addEventListener("touchstart", touchHandler, false);
+
   // Data nube sets of phrases
   const nube = [
     {
