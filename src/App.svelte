@@ -43,11 +43,14 @@
 
   // Array of all items
   let todosLosItems = [];
-  nube.forEach((nubeItem) => {
-    nubeItem.items.forEach((item) => {
-      todosLosItems.push(item);
+  function fillTodosLosItems() {
+    nube.forEach((nubeItem) => {
+      nubeItem.items.forEach((item) => {
+        todosLosItems.push(item);
+      });
     });
-  });
+  }
+  fillTodosLosItems();
 
   let shouldAnimate = false;
   function handleAnimation() {
@@ -85,10 +88,24 @@
 
   let winDiv;
 
+  // Reset the game
   function resetGame() {
     console.log("Resetting game...");
-    // Reset the game here...
-    window.location.reload();
+    droppedItems = [];
+    droppedItemsPerCategory = {
+      P2P: [],
+      RRHH: [],
+      "ORDER TO CASH": [],
+      "CUSTOMER EXPERIENCE": [],
+    };
+    fillTodosLosItems();
+    const winVideo = document.getElementById("winVideo");
+    winVideo.classList.add("hidden");
+    winDiv.classList.add("-z-30");
+    winDiv.classList.add("hidden");
+    winDiv.classList.remove("z-30");
+    const winTextBg = document.getElementById("winTextBG");
+    winTextBg.classList.remove("animate-bounce");
   }
 
   // For testing purposes
