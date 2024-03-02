@@ -1,5 +1,6 @@
 let port;
 
+// List available serial ports programmatically
 export const listPorts = async () => {
   try {
     if (!("serial" in navigator)) {
@@ -22,6 +23,22 @@ export const listPorts = async () => {
     }
   } catch (err) {
     console.log("Error listing serial ports:", err);
+  }
+};
+
+// Create dialog for user
+export const showPorts = async () => {
+  try {
+    if (!("serial" in navigator)) {
+      alert(
+        "The Web Serial API is not supported in this browser. Try Chromium based browser."
+      );
+      return;
+    }
+    port = await navigator.serial.requestPort();
+    console.log("Selected serial port:", port);
+  } catch (err) {
+    console.log("Error selecting serial port:", err);
   }
 };
 

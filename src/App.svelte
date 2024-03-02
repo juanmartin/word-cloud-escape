@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import WordItem from "./WordItem.svelte";
-  import { sendData } from "./lib/serial";
+  import { sendData, showPorts } from "./lib/serial";
   import cloud_bg from "/cloud_bg.mp4";
   import cloud_win from "/cloud_win.mp4";
 
@@ -91,9 +91,14 @@
     window.location.reload();
   }
 
+  // For testing purposes
   function winGame() {
     todosLosItems = [];
     checkWin();
+  }
+
+  async function connectSerialPort() {
+    await showPorts();
   }
 
   // Check if an item belongs to a category
@@ -200,6 +205,12 @@
   <h2 class="text-right font-mono text-cyan-600 mt-3">
     Arrastre los conceptos a su correspondiente categoría
   </h2>
+
+  <!-- hidden button -->
+  <button
+    on:click={connectSerialPort}
+    class="fixed bottom-0 left-0 text-cyan-900">S</button
+  >
 
   <!-- to test the game over -->
   <!-- <button on:click={winGame}> RESET </button> -->
