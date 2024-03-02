@@ -1,4 +1,6 @@
-let port;
+import { serial_port } from "./SERIALPORT";
+
+let port = serial_port;
 
 // List available serial ports programmatically
 export const listPorts = async () => {
