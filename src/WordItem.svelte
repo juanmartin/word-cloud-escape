@@ -45,7 +45,7 @@
 
 <li
   id={word}
-  class="bg-emerald-600 p-4 rounded-xl w-44 mx-auto my-3 shadow-md"
+  class="bg-emerald-600 p-4 rounded-xl w-44 mx-auto my-3 transition-shadow shadow-md hover:shadow-xl"
   draggable={isDraggable}
   use:makeDraggable={{
     shouldBeDraggable: isDraggable,
