@@ -116,6 +116,7 @@
 
   async function connectSerialPort() {
     await showPorts();
+    document.getElementById("serialPortBtn").classList.add("hidden");
   }
 
   // Check if an item belongs to a category
@@ -226,6 +227,7 @@
   <!-- hidden button -->
   <button
     on:click={connectSerialPort}
+    id="serialPortBtn"
     class="fixed bottom-0 left-0 text-cyan-900">S</button
   >
 
