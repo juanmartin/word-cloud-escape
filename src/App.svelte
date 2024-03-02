@@ -226,11 +226,11 @@
     </video>
   </div>
 
-  <h1 class="text-right font-mono text-cyan-300">
-    <!-- Bienvenidos a Cloud Escape! -->
+  <h1 class="text-right font-mono text-cyan-300 text-transparent">
+    Bienvenidos a Cloud Escape!
   </h1>
-  <h2 class="text-right font-mono text-cyan-600 mt-3">
-    <!-- Arrastre los conceptos a su correspondiente categoría -->
+  <h2 class="text-right font-mono text-cyan-600 mt-3 text-transparent">
+    Arrastre los conceptos a su correspondiente categoría
   </h2>
 
   <!-- hidden button -->
