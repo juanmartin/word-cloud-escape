@@ -53,7 +53,7 @@
     shouldAnimate = true;
     setTimeout(() => {
       shouldAnimate = false;
-    }, 500);
+    }, 200);
   }
 
   let droppedItems = [];
@@ -125,35 +125,39 @@
 </script>
 
 <main>
-  <div
-    class="fixed right-0 bottom-0 min-w-full min-h-full -z-10 {shouldAnimate
-      ? 'overlay'
-      : ''}"
-  >
+  <div class="fixed right-0 bottom-0 min-w-full min-h-full -z-20">
+    <div
+      class="fixed right-0 bottom-0 min-w-full min-h-full -z-10 transition-opacity bg-green-500 {shouldAnimate
+        ? 'opacity-50'
+        : 'opacity-0'}"
+    ></div>
     <video
       autoplay
       muted
       loop
       id="myVideo"
-      class="fixed right-0 bottom-0 min-w-full min-h-full -z-10 {shouldAnimate
-        ? 'animate-bounce-zoom ring-4 overlay'
+      class="fixed right-0 bottom-0 min-w-full min-h-full -z-20 {shouldAnimate
+        ? 'animate-bounce-zoom ring-4'
         : ''}"
     >
       <source src={cloud_video} type="video/mp4" />
     </video>
   </div>
 
-  <h1>Bienvenidos a Cloud Escape!</h1>
-  <p>Arrastre los conceptos a su correspondiente categoría.</p>
+  <h1 class="text-right font-mono text-cyan-300">
+    Bienvenidos a Cloud Escape!
+  </h1>
+  <h2 class="text-right font-mono text-cyan-600 mt-3">
+    Arrastre los conceptos a su correspondiente categoría
+  </h2>
 
-  <div class="flex m-2">
+  <div class="flex">
     <!-- Palabras -->
-    <div id="draggable" class="mr-2 max-w-sm">
-      <h2
-        class="bg-cyan-500 p-4 border-cyan-800 border-solid border-2 font-bold"
-      >
-        Conceptos
-      </h2>
+    <div
+      id="draggable"
+      class="mr-4 -mt-24 w-96 bg-white bg-opacity-25 rounded-lg p-3"
+    >
+      <h2 class="bg-cyan-600 p-4 font-bold mb-4 rounded-lg">Conceptos</h2>
       <ul class="list-none flex flex-wrap">
         {#each todosLosItems.sort(() => Math.random() - 0.5) as word (word)}
           <WordItem {word} isDraggable={!droppedItems.includes(word)} />
@@ -161,24 +165,24 @@
       </ul>
     </div>
     <!-- Tabla -->
-    <div class="">
+    <div class="flex flex-grow p-3 mt-72 bg-white bg-opacity-25 rounded-lg">
       <table class="w-full">
-        <tr>
+        <tr class="flex place-content-evenly w-full mx-0">
           {#each nube as columna}
             <th
-              class="droppable bg-cyan-500 p-4 border-cyan-800 border-solid border-2 font-bold w-80"
+              class="bg-cyan-600 p-4 border-solid font-bold w-72 rounded-lg flex justify-center"
             >
               {columna.category}
             </th>
           {/each}
         </tr>
-        <tr class="h-96">
+        <tr class="flex flex-grow h-96">
           {#each nube as columna}
             <td
               id={columna.category}
-              class="droppable border-2 border-gray-300 list-none align-top"
+              class="pt-4 border-gray-300 list-none align-top rounded-lg inline-flex w-full"
             >
-              <div id={columna.category} class="h-full w-full grid">
+              <div id={columna.category} class="droppable h-96 w-full">
                 {#each droppedItemsPerCategory[columna.category] as item}
                   <WordItem word={item} isDraggable={false} />
                 {/each}
