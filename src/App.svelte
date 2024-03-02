@@ -2,7 +2,8 @@
   import { onMount } from "svelte";
   import WordItem from "./WordItem.svelte";
   import { sendData } from "./lib/serial";
-  import cloud_video from "/cloud_video.mp4";
+  import cloud_bg from "/cloud_bg.mp4";
+  import cloud_win from "/cloud_win.mp4";
 
   // Data nube sets of phrases
   const nube = [
@@ -68,9 +69,31 @@
   // Check if game is won
   function checkWin() {
     if (todosLosItems.length === 0) {
-      alert("Ganaste!");
+      console.log("Game won!");
+      const winVideo = document.getElementById("winVideo");
+      winVideo.classList.remove("hidden");
+      winDiv.classList.remove("-z-30");
+      winDiv.classList.remove("hidden");
+      winDiv.classList.add("z-30");
+      const winTextBg = document.getElementById("winTextBG");
+      winTextBg.classList.add("animate-bounce");
+      // @ts-ignore
+      winVideo.play();
       sendData(100);
     }
+  }
+
+  let winDiv;
+
+  function resetGame() {
+    console.log("Resetting game...");
+    // Reset the game here...
+    window.location.reload();
+  }
+
+  function winGame() {
+    todosLosItems = [];
+    checkWin();
   }
 
   // Check if an item belongs to a category
@@ -125,12 +148,39 @@
 </script>
 
 <main>
+  <!-- win -->
+  <div
+    id="winDv"
+    bind:this={winDiv}
+    class="fixed right-0 bottom-0 min-w-full min-h-full -z-30 flex items-center justify-center"
+  >
+    <div
+      id="winTextBG"
+      class="bg-sky-700 bg-opacity-90 rounded-3xl z-50 p-10 shadow-md"
+    >
+      <h1
+        class="text-6xl z-50 shadow-sm animate-text bg-gradient-to-r from-teal-200 via-blue-200 to-green-200 bg-clip-text text-transparent font-black font-mono"
+      >
+        Desafío Superado
+      </h1>
+    </div>
+    <video
+      muted
+      id="winVideo"
+      class="fixed hidden right-0 bottom-0 min-w-full min-h-full z-30"
+      on:ended={resetGame}
+    >
+      <source src={cloud_win} type="video/mp4" />
+    </video>
+  </div>
+
   <div class="fixed right-0 bottom-0 min-w-full min-h-full -z-20">
     <div
       class="fixed right-0 bottom-0 min-w-full min-h-full -z-10 transition-opacity bg-green-500 {shouldAnimate
         ? 'opacity-50'
         : 'opacity-0'}"
     ></div>
+    <!-- bg -->
     <video
       autoplay
       muted
@@ -140,7 +190,7 @@
         ? 'animate-bounce-zoom ring-4'
         : ''}"
     >
-      <source src={cloud_video} type="video/mp4" />
+      <source src={cloud_bg} type="video/mp4" />
     </video>
   </div>
 
@@ -150,6 +200,9 @@
   <h2 class="text-right font-mono text-cyan-600 mt-3">
     Arrastre los conceptos a su correspondiente categoría
   </h2>
+
+  <!-- to test the game over -->
+  <!-- <button on:click={winGame}> RESET </button> -->
 
   <div class="flex">
     <!-- Palabras -->
