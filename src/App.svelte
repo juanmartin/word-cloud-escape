@@ -4,6 +4,8 @@
   import { sendData, showPorts } from "./lib/serial";
   import cloud_bg from "/cloud_bg.mp4";
   import cloud_win from "/cloud_win.mp4";
+  import win_sound from "/ps1.opus";
+  import success_sound from "/blip.ogg";
 
   // Data nube sets of phrases
   const nube = [
@@ -69,24 +71,31 @@
     "CUSTOMER EXPERIENCE": [],
   };
 
+  let winDiv;
+
+  function winGame() {
+    console.log("Game won!");
+    const winVideo = document.getElementById("winVideo");
+    winVideo.classList.remove("hidden");
+    winDiv.classList.remove("-z-30");
+    winDiv.classList.remove("hidden");
+    winDiv.classList.add("z-30");
+    const winTextBg = document.getElementById("winTextBG");
+    winTextBg.classList.add("animate-bounce");
+    // @ts-ignore
+    winVideo.play();
+    const winSound = document.getElementById("winSound");
+    // @ts-ignore
+    winSound.play();
+    sendData(100);
+  }
+
   // Check if game is won
   function checkWin() {
     if (todosLosItems.length === 0) {
-      console.log("Game won!");
-      const winVideo = document.getElementById("winVideo");
-      winVideo.classList.remove("hidden");
-      winDiv.classList.remove("-z-30");
-      winDiv.classList.remove("hidden");
-      winDiv.classList.add("z-30");
-      const winTextBg = document.getElementById("winTextBG");
-      winTextBg.classList.add("animate-bounce");
-      // @ts-ignore
-      winVideo.play();
-      sendData(100);
+      winGame();
     }
   }
-
-  let winDiv;
 
   // Reset the game
   function resetGame() {
@@ -106,12 +115,6 @@
     winDiv.classList.remove("z-30");
     const winTextBg = document.getElementById("winTextBG");
     winTextBg.classList.remove("animate-bounce");
-  }
-
-  // For testing purposes
-  function winGame() {
-    todosLosItems = [];
-    checkWin();
   }
 
   async function connectSerialPort() {
@@ -161,6 +164,9 @@
       todosLosItems = todosLosItems.filter((item) => item !== itemId);
       console.log("droppedItems", droppedItems);
       console.log("Correct category for", itemId, "in", category);
+      const successSound = document.getElementById("successSound");
+      // @ts-ignore
+      successSound.play();
       handleAnimation();
       checkWin();
     } else {
@@ -177,6 +183,8 @@
     bind:this={winDiv}
     class="fixed right-0 bottom-0 min-w-full min-h-full -z-30 flex items-center justify-center"
   >
+    <audio id="winSound" src={win_sound}></audio>
+    <audio id="successSound" src={success_sound}></audio>
     <div
       id="winTextBG"
       class="bg-sky-700 bg-opacity-90 rounded-3xl z-50 p-10 shadow-md"
@@ -233,7 +241,7 @@
   >
 
   <!-- to test the game over -->
-  <!-- <button on:click={winGame}> RESET </button> -->
+  <!-- <button on:click={winGame}> GANAR </button> -->
 
   <div class="flex">
     <!-- Palabras -->
