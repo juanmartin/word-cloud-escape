@@ -197,10 +197,11 @@
     </video>
   </div>
 
+  <!-- overlay -->
   <div class="fixed right-0 bottom-0 min-w-full min-h-full -z-20">
     <div
       class="fixed right-0 bottom-0 min-w-full min-h-full -z-10 transition-opacity bg-green-500 {shouldAnimate
-        ? 'opacity-50'
+        ? 'opacity-20'
         : 'opacity-0'}"
     ></div>
     <!-- bg -->
