@@ -191,7 +191,7 @@
       muted
       loop
       id="myVideo"
-      class="fixed right-0 bottom-0 min-w-full min-h-full -z-20 {shouldAnimate
+      class="fixed right-0 top-0 min-w-full min-h-full -z-20 {shouldAnimate
         ? 'animate-bounce-zoom ring-4'
         : ''}"
     >
