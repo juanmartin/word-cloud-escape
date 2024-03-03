@@ -31,6 +31,8 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+  /* avoid back and forward when dragging and dropping */
+  overscroll-behavior-x: none;
 }
 
 h1 {
