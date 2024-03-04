@@ -12,10 +12,9 @@
     el.addEventListener("contextmenu", (e) => e.preventDefault())
   );
 
+  // disable multi-touch
   function touchHandler(event) {
     if (event.touches.length > 1) {
-      //the event is multi-touch
-      //you can then prevent the behavior
       event.preventDefault();
     }
   }
@@ -77,7 +76,6 @@
   }
 
   let droppedItems = [];
-
   let droppedItemsPerCategory = {
     P2P: [],
     RRHH: [],
@@ -239,19 +237,20 @@
       <source src={cloud_bg} type="video/mp4" />
     </video>
   </div>
-
-  <h1 class="text-right font-mono text-cyan-300 text-transparent">
-    Bienvenidos a Cloud Escape!
-  </h1>
-  <h2 class="text-right font-mono text-cyan-600 mt-3 text-transparent">
-    Arrastre los conceptos a su correspondiente categoría
-  </h2>
-
+  <!-- titulos -->
+  <div class="fixed top-10 right-10 hidden">
+    <h1 class="text-right font-mono text-cyan-300">
+      Bienvenidos a Cloud Escape!
+    </h1>
+    <h2 class="text-right font-mono text-cyan-600 mt-3">
+      Arrastre los conceptos a su correspondiente categoría
+    </h2>
+  </div>
   <!-- hidden button -->
   <button
     on:click={connectSerialPort}
     id="serialPortBtn"
-    class="fixed bottom-0 left-0 text-cyan-900">S</button
+    class="fixed bottom-0 left-0 text-cyan-900 bg-slate-400">S</button
   >
 
   <!-- to test the game over -->
@@ -259,10 +258,7 @@
 
   <div class="flex">
     <!-- Palabras -->
-    <div
-      id="draggable"
-      class="mr-4 -mt-24 w-96 bg-white bg-opacity-25 rounded-lg p-3"
-    >
+    <div class="mr-4 mb-0 w-96 bg-white bg-opacity-25 rounded-lg p-3">
       <h2 class="bg-cyan-600 p-4 font-bold mb-4 rounded-lg shadow-lg">
         Conceptos
       </h2>
