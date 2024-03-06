@@ -3,15 +3,19 @@ import express from "express";
 import http from "http";
 import WebSocket from "ws";
 import { SerialPort } from "serialport";
-import { promisify } from "util";
-import { exec as execCb } from "child_process";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
-const exec = promisify(execCb);
-
+// Because of ES module thing
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const HTTP_PORT = 3000;
 
 // Create an Express app
 const app = express();
+// Serve Vite Svelte frontend app
+app.use(express.static(path.resolve(__dirname, "..", "dist")));
 // Create an HTTP server
 const server = http.createServer(app);
 // Create a WebSocket server
