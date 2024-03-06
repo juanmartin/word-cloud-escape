@@ -1,7 +1,8 @@
 <script>
   import { onMount } from "svelte";
   import WordItem from "./WordItem.svelte";
-  import { sendData, showPorts } from "./lib/serial";
+  import { sendData, showPorts, selectPort } from "./lib/web_serial";
+  import { sendPort } from "./lib/backend_serial";
   import cloud_bg from "/cloud_bg.mp4";
   import cloud_win from "/cloud_win.mp4";
   import win_sound from "/ps1.opus";
@@ -129,9 +130,24 @@
     winTextBg.classList.remove("animate-bounce");
   }
 
-  async function connectSerialPort() {
+  // Toggles serial port menu
+  // on Chrome shows native dialog,
+  // on Firefox shows dialog with select
+  async function serialPortMenu() {
     await showPorts();
-    document.getElementById("serialPortBtn").classList.add("hidden");
+    // show Firefox picker
+    document.getElementById("portPicker").classList.remove("hidden");
+  }
+  function selectSerialPort() {
+    // @ts-ignore
+    const port = document.getElementById("portPicker").value;
+    console.log("Selected port:", port);
+    // if Firefox
+    if (!("serial" in navigator)) {
+      sendPort(port);
+      selectPort(port);
+      document.getElementById("serialPortMenu").classList.add("hidden");
+    }
   }
 
   // Check if an item belongs to a category
@@ -246,12 +262,22 @@
       Arrastre los conceptos a su correspondiente categoría
     </h2>
   </div>
-  <!-- hidden button -->
-  <button
-    on:click={connectSerialPort}
-    id="serialPortBtn"
-    class="fixed bottom-0 left-0 text-cyan-900 bg-slate-400">S</button
-  >
+  <!-- hidden serial menu -->
+  <div id="serialPortMenu" class="fixed bottom-2 left-2">
+    <button on:click={serialPortMenu} class="text-cyan-900 bg-slate-400">
+      S
+    </button>
+    <!-- serial port picker -->
+    <select id="portPicker" class="hidden"></select>
+    <!-- serial port select button -->
+    <button
+      id="portPickerSelect"
+      on:click={selectSerialPort}
+      class="text-cyan-900 bg-slate-400 hidden"
+    >
+      Select
+    </button>
+  </div>
 
   <!-- to test the game over -->
   <!-- <button on:click={winGame}> GANAR </button> -->
