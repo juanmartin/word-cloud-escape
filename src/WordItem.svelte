@@ -33,19 +33,20 @@
   function handleDragStart(event) {
     event.dataTransfer.setData("text/plain", event.target.id);
     event.target.classList.add("dragging");
-    event.target.classList.add(
-      "transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300"
-    );
+    event.target.classList.add("shadow-none");
+    event.target.classList.add("rounded-none");
   }
 
   function handleDragEnd(event) {
     event.target.classList.remove("dragging");
+    event.target.classList.remove("shadow-none");
+    event.target.classList.remove("rounded-none");
   }
 </script>
 
 <li
   id={word}
-  class="bg-emerald-600 p-4 rounded-xl w-44 mx-auto my-3 transition-shadow shadow-md hover:shadow-xl"
+  class="bg-emerald-600 p-4 rounded-xl w-44 mx-auto my-3 shadow-md"
   draggable={isDraggable}
   use:makeDraggable={{
     shouldBeDraggable: isDraggable,
