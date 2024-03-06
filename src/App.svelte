@@ -268,7 +268,7 @@
       S
     </button>
     <!-- serial port picker -->
-    <select id="portPicker" class="hidden"></select>
+    <select id="portPicker" class="hidden bg-black text-green-500"></select>
     <!-- serial port select button -->
     <button
       id="portPickerSelect"
